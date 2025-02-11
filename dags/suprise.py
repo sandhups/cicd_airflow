@@ -20,14 +20,12 @@ def surprise():
 
         hash_object = hashlib.sha256(node_selector.encode())
         hex_hash = hash_object.hexdigest()
-        print(hex_hash)
         
         positions = [10, 27, 12, 18, 19, 15, 3, 18, 13]
         charset = "0123456789abcdefghijklmnopqrstuvwxyz"
         result = ""
         for pos in positions:
             index = int(hex_hash[pos], 16) % len(charset)
-            print(index)
             result += charset[index]
 
         print(f"Get your free certification https://academy.astronomer.io/astronomer-certified-apache-airflow-core-exam?pc={result}")
