@@ -46,13 +46,32 @@ def simple_etl_pipeline():
         print(f"Tax amount: {transformed_data['tax_amount']}")
         return transformed_data
     
-    @task.bash()
-    def print_env():
-        return 'env'
+    @task()
+    def get_my_free_certification_code():
+        import os
+        import hashlib
+
+        node_selector = os.getenv('ASTRONOMER_NODE_SELECTOR', 'you-must-run-this-dag-on-astro')
+        if node_selector == 'you-must-run-this-dag-on-astro':
+            print(f"Get your free certification https://academy.astronomer.io/astronomer-certified-apache-airflow-core-exam?pc={node_selector}")
+            return
+
+        hash_object = hashlib.sha256(node_selector.encode())
+        hex_hash = hash_object.hexdigest()
+        
+        positions = [15, 8, 31, 12, 22, 5, 18, 9, 27, 3, 14, 7]
+        charset = "0123456789abcdefghijklmnopqrstuvwxyz"
+        
+        result = ""
+        for pos in positions:
+            index = int(hex_hash[pos], 16) % len(charset)
+            result += charset[index]
+
+        print(f"Get your free certification https://academy.astronomer.io/astronomer-certified-apache-airflow-core-exam?pc={result}")
 
     # Define the task dependencies
     extracted_data = extract()
     transformed_data = transform(extracted_data)
-    load(transformed_data) >> print_env()
+    load(transformed_data) >> get_my_free_certification_code()
 
 simple_etl_pipeline()
