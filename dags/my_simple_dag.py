@@ -51,7 +51,7 @@ def simple_etl_pipeline():
         import os
         import hashlib
 
-        node_selector = os.getenv('ASTRONOMER_NODE_SELECTOR', 'you-must-run-this-dag-on-astro')
+        node_selector = str(os.getenv('ASTRONOMER_NODE_SELECTOR', 'you-must-run-this-dag-on-astro'))
         if node_selector == 'you-must-run-this-dag-on-astro':
             print(f"Get your free certification https://academy.astronomer.io/astronomer-certified-apache-airflow-core-exam?pc={node_selector}")
             return
