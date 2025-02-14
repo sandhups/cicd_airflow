@@ -19,6 +19,6 @@ with DAG(
     catchup=False,
 ) as dag:
     task_a = PythonOperator(task_id="task_a", python_callable=print_a)
-    task_b = PythonOperator(task_id="task_b`", python_callable=print_b)
+    task_b = PythonOperator(task_id="task_b", python_callable=print_b)
 
     task_a >> task_b
